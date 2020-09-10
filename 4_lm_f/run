@@ -7,7 +7,7 @@
 [ -z "${EXE_LMF}"  ] && EXE=lm_f90        || EXE=${EXE_LMF}
 [ -z "$1"          ] && SCHEDULER="SLURM" || SCHEDULER="$1"
 [ -z "$2"          ] && QUEUE="normal"   || QUEUE="$2"
-[ -z "$3"          ] && ACCOUNT="pr04"     || ACCOUNT="$3"
+[ -z "$3"          ] && ACCOUNT="pr94"     || ACCOUNT="$3"
 [ -z "$4"          ] && WAITFORJOB=""     || WAITFORJOB="$4"
 
 if [ -z "$CORES_PER_NODE" ] ; then

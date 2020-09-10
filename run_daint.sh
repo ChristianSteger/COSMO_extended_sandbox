@@ -25,7 +25,7 @@ NAME_RUN="testing_sandbox"
 
 export SCHEDULER="SLURM"
 export QUEUE="normal"
-export ACCOUNT="pr04"
+export ACCOUNT="pr94"
 export RUNCMD="srun"
 export CORES_PER_NODE=24
 export TASKS_PER_NODE=1
