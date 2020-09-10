@@ -6,7 +6,7 @@ module load daint-gpu
 
 #module load COSMO_pompa/31d7227-CrayCCE-19.08-cuda-10.0-crclim-double
 module unload cudatoolkit
-module load cudatoolkit/10.0.130_3.22-7.0.1.0_5.2__gdfb4ce5
+module load cudatoolkit/10.2.89_3.28-7.0.2.1_2.17__g52c0314
 
 export MV2_ENABLE_AFFINITY=0
 export MV2_USE_CUDA=1

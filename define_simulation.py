@@ -20,7 +20,7 @@ import calendar
 name_run='testing_sandbox'
 
 postprocessing=True
-store_system='/store/c2sm/pr04/jvergara/RUNS_IN_SCRATCH/'
+store_system='/store/c2sm/pr04/csteger/RUNS_IN_SCRATCH/'
 saving_folder=store_system+name_run+'/'
 scratch_folder= os.environ['SCRATCH']+'/'+name_run
 
