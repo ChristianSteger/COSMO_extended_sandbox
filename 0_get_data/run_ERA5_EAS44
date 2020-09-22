@@ -1,22 +1,24 @@
 #!/bin/bash
 
 
+
 bd_data=/project/pr94/rxiang/ERA5/subdomain/${LM_YYYY_BEGIN}_${LM_MM_BEGIN}/
-next_date=$(date -d "${LM_YYYY_BEGIN}-${LM_MM_BEGIN}-01 1 month" +%Y-%m-%d )
+#next_date=$(date -d "${LM_YYYY_BEGIN}-${LM_MM_BEGIN}-01 1 month" +%Y-%m-%d )
 
 #echo ${LM_YYYY_BEGIN}_${LM_MM_BEGIN}
 #echo $next_date
 
-LM_YYYY_NEXT=$(echo $next_date |colrm 5)
-LM_MM_NEXT=$(echo $next_date |colrm 8| tail -c 3)
+#LM_YYYY_NEXT=$(echo $next_date |colrm 5)
+#LM_MM_NEXT=$(echo $next_date |colrm 8| tail -c 3)
 #echo $LM_YYYY_NEXT
 #echo $LM_MM_NEXT
-bd_data_next=/project/pr94/rxiang/ERA5/subdomain/${LM_YYYY_NEXT}_${LM_MM_NEXT}/
+#bd_data_next=/project/pr94/ERAinterim/${LM_YYYY_NEXT}/ERAINT_${LM_YYYY_NEXT}_${LM_MM_NEXT}.tar.gz
 
+start_date=$(date -d "${LM_YYYY_BEGIN}-${LM_MM_BEGIN}-01 ${LM_NL_HSTART} hour" +%Y-%m-%d )
+prev_date=$(date -d "${start_date} -1 day" +%Y-%m-%d )
+num_days=$(((LM_NL_HSTOP - LM_NL_HSTART) / 24))
 
-
-
-prev_date=$(date -d "${LM_YYYY_BEGIN}-${LM_MM_BEGIN}-01 -1 month" +%Y-%m-%d )
+#prev_date=$(date -d "${LM_YYYY_BEGIN}-${LM_MM_BEGIN}-01 -1 month" +%Y-%m-%d )
 
 #echo ${LM_YYYY_BEGIN}_${LM_MM_BEGIN}
 #echo $prev_date
@@ -53,9 +55,22 @@ if [ ! -f ../1_ifs2lm/$extpar_file_lm_c ] ; then /bin/cp $extpar_dir/$extpar_fil
 if [ ! -f ../3_lm2lm/$extpar_file_lm_f  ] ; then /bin/cp $extpar_dir/$extpar_file_lm_f ../3_lm2lm/input  ; fi
 
 
-cp ${bd_data}cas??????????.nc output
-cp ${bd_data_prev}cas??????????.nc output
-cp ${bd_data_next}cas??????????.nc output
+#tar -xzvf $bd_data -C output --transform 's/caf/cas/'
+#tar -xzvf $bd_data_prev -C output --transform 's/caf/cas/'
+#tar -xzvf $bd_data_next -C output --transform 's/caf/cas/'
+output=/scratch/snx3000/csteger/Temp/Test/ ############################ temporary !!!!
+file=cas$(date -d "${prev_date}" +%Y%m%d )18.nc
+nccopy -d 0 ${bd_data_prev}${file} ${output}${file}
+for i in $(seq 0 $((num_days - 1)))
+do
+   for j in 00 06 12 18
+   do
+      file=cas$(date -d "${start_date} ${i} day" +%Y%m%d )${j}.nc
+      nccopy -d 0 ${bd_data}${file} ${output}${file}
+   done
+done
+file=cas$(date -d "${start_date} ${num_days} day" +%Y%m%d )00.nc
+nccopy -d 0 ${bd_data}${file} ${output}${file}
 
 #ssh ela 'sleep 20 &&ls>test_ls &'
 
