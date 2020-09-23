@@ -33,9 +33,9 @@ bd_data_prev=/project/pr94/rxiang/ERA5/subdomain/${LM_YYYY_PREV}_${LM_MM_PREV}/
 #echo $bd_data_next
 #echo $bd_data_prev
 #External Parameters
-extpar_dir=/project/pr94/extpar-HPC
-extpar_file_lm_c=extpar_12km_europe_771x771.nc
-extpar_file_lm_f=extpar_2km_europe_2313x2313.nc
+extpar_dir=/store/c2sm/pr04/csteger/Model/EXTPAR
+extpar_file_lm_c=extpar_50km_EAS_254x182.nc
+#extpar_file_lm_f=extpar_2km_europe_2313x2313.nc
 
 cat > job <<EOF_job
 #!/bin/bash -l
@@ -52,7 +52,7 @@ if [ ! -d ../input/ifs2lm ] ; then mkdir -p ../input/ifs2lm ; fi
 
 #Copy External Parameters
 if [ ! -f ../1_ifs2lm/$extpar_file_lm_c ] ; then /bin/cp $extpar_dir/$extpar_file_lm_c ../1_ifs2lm/input ; fi
-if [ ! -f ../3_lm2lm/$extpar_file_lm_f  ] ; then /bin/cp $extpar_dir/$extpar_file_lm_f ../3_lm2lm/input  ; fi
+#if [ ! -f ../3_lm2lm/$extpar_file_lm_f  ] ; then /bin/cp $extpar_dir/$extpar_file_lm_f ../3_lm2lm/input  ; fi
 
 
 #tar -xzvf $bd_data -C output --transform 's/caf/cas/'
