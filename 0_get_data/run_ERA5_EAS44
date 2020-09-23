@@ -58,19 +58,18 @@ if [ ! -f ../3_lm2lm/$extpar_file_lm_f  ] ; then /bin/cp $extpar_dir/$extpar_fil
 #tar -xzvf $bd_data -C output --transform 's/caf/cas/'
 #tar -xzvf $bd_data_prev -C output --transform 's/caf/cas/'
 #tar -xzvf $bd_data_next -C output --transform 's/caf/cas/'
-output=/scratch/snx3000/csteger/Temp/Test/ ############################ temporary !!!!
-file=cas$(date -d "${prev_date}" +%Y%m%d )18.nc
-nccopy -d 0 ${bd_data_prev}${file} ${output}${file}
-for i in $(seq 0 $((num_days - 1)))
+nccopy -d 0 ${bd_data_prev}cas$(date -d "${prev_date}" +%Y%m%d )18.nc output/cas$(date -d "${prev_date}" +%Y%m%d )18.nc
+num_days=${num_days}
+bd_data=${bd_data}
+start_date=${start_date}
+for i in \$(seq 0 $((num_days - 1)))
 do
    for j in 00 06 12 18
    do
-      file=cas$(date -d "${start_date} ${i} day" +%Y%m%d )${j}.nc
-      nccopy -d 0 ${bd_data}${file} ${output}${file}
+      nccopy -d 0 \${bd_data}cas\$(date -d "\${start_date} \${i} day" +%Y%m%d )\${j}.nc output/cas\$(date -d "\${start_date} \${i} day" +%Y%m%d )\${j}.nc
    done
 done
-file=cas$(date -d "${start_date} ${num_days} day" +%Y%m%d )00.nc
-nccopy -d 0 ${bd_data}${file} ${output}${file}
+nccopy -d 0 ${bd_data}cas$(date -d "${start_date} ${num_days} day" +%Y%m%d )00.nc output/cas$(date -d "${start_date} ${num_days} day" +%Y%m%d )00.nc
 
 #ssh ela 'sleep 20 &&ls>test_ls &'
 
